@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.controllers.VehicleOwnerRegistration">
+   <children>
+      <AnchorPane prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #FF8C00;">
+         <children>
+            <Label layoutX="286.0" layoutY="35.0" text="Register as Vehicle Owner">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label layoutX="100.0" layoutY="200.0" text="First name :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="360.0" text="Password :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="320.0" text="Username :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="280.0" text="E-mail :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="240.0" text="Last name :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="440.0" text="EV type :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="400.0" text="Car's brand and model :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="480.0" text="Fabrication year :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="registerButton" layoutX="100.0" layoutY="580.0" mnemonicParsing="false" onAction="#registerVehicleOwner" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #FF6347;" text="Register" textFill="WHITE" />
+      <Button fx:id="vehicleOwnerButton" layoutX="100.0" layoutY="620.0" mnemonicParsing="false" onAction="#switchToCompanyRegister" prefHeight="26.0" prefWidth="180.0" style="-fx-background-color: #FF6347;" text="Switch to Company Register" textFill="WHITE" />
+      <Button fx:id="exitButton" layoutX="640.0" layoutY="620.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #FF6347;" text="Exit" textFill="WHITE" />
+      <TextField fx:id="firstNameTextField" layoutX="326.0" layoutY="200.0" prefHeight="26.0" prefWidth="300.0" promptText="First name" />
+      <TextField fx:id="lastNameTextField" layoutX="326.0" layoutY="239.0" prefHeight="26.0" prefWidth="300.0" promptText="Last name" />
+      <TextField fx:id="emailTextField" layoutX="326.0" layoutY="279.0" prefHeight="26.0" prefWidth="300.0" promptText="E-mail" />
+      <TextField fx:id="usernameTextField" layoutX="326.0" layoutY="319.0" prefHeight="26.0" prefWidth="300.0" promptText="Username" />
+      <TextField fx:id="carBrandAndModelTextField" layoutX="326.0" layoutY="399.0" prefHeight="26.0" prefWidth="300.0" promptText="Car's brand and model" />
+      <TextField fx:id="evTypeTextField" layoutX="326.0" layoutY="439.0" prefHeight="26.0" prefWidth="300.0" promptText="EV type" />
+      <TextField fx:id="fabricationYearTextField" layoutX="326.0" layoutY="479.0" prefHeight="26.0" prefWidth="300.0" promptText="Fabrication year" />
+      <PasswordField fx:id="setPasswordField" layoutX="326.0" layoutY="359.0" prefHeight="26.0" prefWidth="300.0" promptText="Password" />
+      <Label fx:id="registrationMessage" layoutX="175.0" layoutY="530.0" prefHeight="26.0" prefWidth="450.0" textAlignment="CENTER" textFill="RED">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
