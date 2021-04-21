@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.controllers.CompanyRegistration">
+   <children>
+      <AnchorPane prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #FF8C00;">
+         <children>
+            <Label layoutX="300.0" layoutY="34.0" prefHeight="30.0" prefWidth="200.0" text="Register as Company" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Button fx:id="registerButton" layoutX="100.0" layoutY="580.0" mnemonicParsing="false" onAction="#registerComp" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #FF6347;" text="Register" textFill="WHITE" />
+      <Button fx:id="companyButton" layoutX="100.0" layoutY="620.0" mnemonicParsing="false" onAction="#switchToVehicleOwnerRegister" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: #FF6347;" text="Switch to Vehicle Owner Register" textFill="WHITE" />
+      <Button fx:id="exitButton" layoutX="640.0" layoutY="620.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #FF6347;" text="Exit" textFill="WHITE" />
+      <Label layoutX="100.0" layoutY="200.0" text="Company name :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="240.0" text="Country of origin :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="280.0" text="Address :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="320.0" text="Username :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="360.0" text="Password :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="400.0" text="E-mail :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="440.0" text="Telephone number :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="480.0" text="Fax number :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="companyNameTextField" layoutX="326.0" layoutY="200.0" prefHeight="26.0" prefWidth="300.0" promptText="Company name" />
+      <TextField fx:id="countryOfOriginTextField" layoutX="326.0" layoutY="239.0" prefHeight="26.0" prefWidth="300.0" promptText="Country of origin" />
+      <TextField fx:id="addressTextField" layoutX="326.0" layoutY="279.0" prefHeight="26.0" prefWidth="300.0" promptText="Address" />
+      <TextField fx:id="usernameTextField" layoutX="326.0" layoutY="319.0" prefHeight="26.0" prefWidth="300.0" promptText="Username" />
+      <TextField fx:id="emailTextField" layoutX="326.0" layoutY="399.0" prefHeight="26.0" prefWidth="300.0" promptText="E-mail" />
+      <TextField fx:id="telephoneNumberTextField" layoutX="326.0" layoutY="439.0" prefHeight="26.0" prefWidth="300.0" promptText="Telephone number" />
+      <TextField fx:id="faxNumberTextField" layoutX="326.0" layoutY="479.0" prefHeight="26.0" prefWidth="300.0" promptText="Fax number" />
+      <PasswordField fx:id="setPasswordField" layoutX="326.0" layoutY="360.0" prefHeight="26.0" prefWidth="300.0" promptText="Password" />
+      <Label fx:id="registrationMessage" layoutX="175.0" layoutY="530.0" prefHeight="26.0" prefWidth="450.0" textFill="RED">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
