@@ -10,13 +10,14 @@ import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import org.fis2021.exceptions.UsernameAlreadyExistsException;
-
+import org.fis2021.services.CompanyService;
 
 
 import java.awt.*;
 import java.io.IOException;
 
 import static org.fis2021.App.loadFXML;
+import static org.fis2021.services.CompanyService.initCompany;
 
 
 public class CompanyRegistration {
@@ -63,9 +64,15 @@ public class CompanyRegistration {
     }
 
     public void registerCompany(ActionEvent event) {
-
+        try {
+            Stage stage = (Stage) registerButton.getScene().getWindow();
+            Scene scene = new Scene(loadFXML("CompanyRegister"), 800, 700);
+            stage.setTitle("Electric Charging Stations Application - Company Registration");
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
 
     public void switchToVehicleOwnerRegister(ActionEvent event) {
         try {
@@ -78,4 +85,13 @@ public class CompanyRegistration {
         }
     }
 
+    public void registerComp() {
+        initCompany();
+        try {
+            CompanyService.addCompany(companyNameTextField.getText(), countryOfOriginTextField.getText(), addressTextField.getText(), usernameTextField.getText(), setPasswordField.getText(), emailTextField.getText(), telephoneNumberTextField.getText(), faxNumberTextField.getText());
+            registrationMessage.setText("Account created successfully!");
+        } catch (UsernameAlreadyExistsException e) {
+            registrationMessage.setText(e.getMessage());
+        }
+    }
 }

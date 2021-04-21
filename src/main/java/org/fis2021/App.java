@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.fis2021.services.DatabaseService;
+import org.fis2021.services.FileSystemService;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,10 +22,19 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        initDirectory();
+        DatabaseService.initDatabase();
         scene = new Scene(loadFXML("Login"), 600, 400);
         stage.setScene(scene);
+        stage.setTitle("Electric Charging Stations Application - Login");
         stage.setResizable(false);
         stage.show();
+    }
+
+    private void initDirectory() {
+        Path applicationHomePath = FileSystemService.APPLICATION_HOME_PATH;
+        if(!Files.exists(applicationHomePath))
+            applicationHomePath.toFile().mkdir();
     }
 
     static void setRoot(String fxml) throws IOException {

@@ -8,9 +8,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import org.fis2021.exceptions.UsernameAlreadyExistsException;
+import org.fis2021.services.VehicleOwnerService;
 
 import java.io.IOException;
 import static org.fis2021.App.loadFXML;
+import static org.fis2021.services.VehicleOwnerService.initVehicleOwner;
 
 public class VehicleOwnerRegistration {
 
@@ -70,7 +73,22 @@ public class VehicleOwnerRegistration {
 
     @FXML
     void registerVehicleOwner(ActionEvent event) {
-
+        try {
+            Stage stage = (Stage) registerButton.getScene().getWindow();
+            Scene scene = new Scene(loadFXML("VehicleOwnerRegister"), 800, 700);
+            stage.setTitle("Electric Charging Stations Application - Vehicle Owner Registration");
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
+    public void registerOwner() {
+        initVehicleOwner();
+        try {
+            VehicleOwnerService.addVehicleOwner(firstNameTextField.getText(), lastNameTextField.getText(), emailTextField.getText(), usernameTextField.getText(), setPasswordField.getText(), carBrandAndModelTextField.getText(), evTypeTextField.getText(), fabricationYearTextField.getText());
+            registrationMessage.setText("Account created successfully!");
+        } catch (UsernameAlreadyExistsException e) {
+            registrationMessage.setText(e.getMessage());
+        }
+    }
 }
