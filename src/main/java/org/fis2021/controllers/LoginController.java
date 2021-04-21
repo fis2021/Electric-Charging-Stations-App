@@ -2,17 +2,12 @@ package org.fis2021.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-
-import org.fis2021.exceptions.UsernameAlreadyExistsException;
-import org.fis2021.services.UserService;
 
 import java.io.IOException;
 
