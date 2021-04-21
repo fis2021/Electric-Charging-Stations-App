@@ -68,7 +68,14 @@ public class CompanyRegistration {
 
 
     public void switchToVehicleOwnerRegister(ActionEvent event) {
-
+        try {
+            Stage stage = (Stage) companyButton.getScene().getWindow();
+            Scene scene = new Scene(loadFXML("VehicleOwnerRegister"), 800, 700);
+            stage.setTitle("Electric Charging Stations Application - Vehicle Owner Registration");
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

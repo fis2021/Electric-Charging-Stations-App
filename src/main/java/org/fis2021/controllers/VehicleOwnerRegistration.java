@@ -1,6 +1,7 @@
 package org.fis2021.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -8,7 +9,13 @@ import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import static org.fis2021.App.loadFXML;
+
 public class VehicleOwnerRegistration {
+
+    @FXML
+    private Button vehicleOwnerButton;
 
     @FXML
     private Button registerButton;
@@ -51,7 +58,14 @@ public class VehicleOwnerRegistration {
 
     @FXML
     void switchToCompanyRegister(ActionEvent event) {
-
+        try {
+            Stage stage = (Stage) vehicleOwnerButton.getScene().getWindow();
+            Scene scene = new Scene(loadFXML("CompanyRegister"), 800, 700);
+            stage.setTitle("Electric Charging Stations Application - Company Registration");
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

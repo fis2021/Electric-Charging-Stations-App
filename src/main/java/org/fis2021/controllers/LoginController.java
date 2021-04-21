@@ -36,9 +36,7 @@ public class LoginController {
     private PasswordField setPasswordField;
 
     @FXML
-    void exit(ActionEvent event) {
-
-    }
+    private Label loginMessage;
 
     public void exitButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) exitButton.getScene().getWindow();
@@ -46,11 +44,30 @@ public class LoginController {
     }
 
     public void loginButtonOnAction(ActionEvent event) {
-
+        String username = usernameTextField.getText();
+        String password = setPasswordField.getText();
+        if (username.isEmpty() && password.isEmpty()) {
+            loginMessage.setText("Please enter an username and a password!");
+        } else {
+            if (username.isEmpty() || username == null) {
+                loginMessage.setText("Please enter an username!");
+            }
+            else
+                if (password.isEmpty() || password == null) {
+                    loginMessage.setText("Please enter a password!");
+                }
+        }
     }
 
     public void registerButtonOnAction(ActionEvent event) {
-
+        try {
+            Stage stage = (Stage) registerButton.getScene().getWindow();
+            Scene scene = new Scene(loadFXML("VehicleOwnerRegister"), 800, 700);
+            stage.setTitle("Electric Charging Stations Application - Vehicle Owner Registration");
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
