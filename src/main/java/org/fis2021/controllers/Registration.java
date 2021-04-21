@@ -8,24 +8,29 @@ import javafx.scene.text.Text;
 import org.fis2021.exceptions.UsernameAlreadyExistsException;
 import org.fis2021.services.UserService;
 
-public class RegistrationController {
+public class Registration {
 
     @FXML
     private Text registrationMessage;
     @FXML
-    public PasswordField passwordField;
+    private PasswordField passwordField;
     @FXML
     private TextField usernameField;
     @FXML
     private ChoiceBox role;
 
     @FXML
+    public void initialize() {
+        role.getItems().addAll("Client", "Admin");
+    }
+
+    @FXML
     public void handleRegisterAction() {
         try {
-            UserService.addUser(usernameField.getText(),passwordField.getText(),(String) role.getValue());
-            registrationMessage.setText("Account created succesfully!");
+            UserService.addUser(usernameField.getText(), passwordField.getText(), (String) role.getValue());
+            registrationMessage.setText("Account created successfully!");
         } catch (UsernameAlreadyExistsException e) {
-            registrationMessage.setText("e.getMessage");
+            registrationMessage.setText(e.getMessage());
         }
     }
 }
