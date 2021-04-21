@@ -14,6 +14,9 @@ public class VehicleOwner {
         this.fabricationYear = fabricationYear;
     }
 
+    public VehicleOwner() {
+
+    }
     public String getFirstname() {
         return firstname;
     }

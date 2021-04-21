@@ -14,6 +14,10 @@ public class Company {
         this.faxNumber = faxNumber;
     }
 
+    public Company() {
+
+    }
+
     public String getCompanyName() {
         return companyName;
     }
