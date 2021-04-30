@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.scene.control.ChoiceBox;
 
 import java.io.IOException;
 
@@ -25,6 +26,9 @@ public class LoginController {
     private Button registerButton;
 
     @FXML
+    private ChoiceBox roleBox;
+
+    @FXML
     private Button exitButton;
 
     @FXML
@@ -33,22 +37,27 @@ public class LoginController {
     @FXML
     private Label loginMessage;
 
+    public void initialize() {
+        roleBox.getItems().addAll("Vehicle Owner", "Company Administrator");
+    }
+
     public void exitButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
 
     public void loginButtonOnAction(ActionEvent event) {
-        String username = usernameTextField.getText();
-        String password = setPasswordField.getText();
-        if (username.isEmpty() && password.isEmpty()) {
+        if(roleBox.getValue() == null) {
+            loginMessage.setText("Please choose a role!");
+        }
+        if (usernameTextField.getText().isEmpty() && setPasswordField.getText().isEmpty()) {
             loginMessage.setText("Please enter an username and a password!");
         } else {
-            if (username.isEmpty() || username == null) {
+            if (usernameTextField.getText().isEmpty() || usernameTextField == null) {
                 loginMessage.setText("Please enter an username!");
             }
             else
-                if (password.isEmpty() || password == null) {
+                if (setPasswordField.getText().isEmpty() || setPasswordField == null) {
                     loginMessage.setText("Please enter a password!");
                 }
         }
