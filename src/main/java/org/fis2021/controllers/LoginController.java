@@ -9,10 +9,18 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ChoiceBox;
+import org.fis2021.exceptions.UserNotFoundException;
+import org.fis2021.model.VehicleOwner;
+import org.fis2021.services.VehicleOwnerService;
+
+import org.fis2021.services.VehicleOwnerService;
+import org.fis2021.services.CompanyService;
 
 import java.io.IOException;
 
 import static org.fis2021.App.loadFXML;
+import static org.fis2021.services.CompanyService.initCompany;
+import static org.fis2021.services.VehicleOwnerService.initVehicleOwner;
 
 public class LoginController {
 
@@ -47,20 +55,73 @@ public class LoginController {
     }
 
     public void loginButtonOnAction(ActionEvent event) {
+        initVehicleOwner();
+        initCompany();
         if(roleBox.getValue() == null) {
             loginMessage.setText("Please choose a role!");
         }
-        if (usernameTextField.getText().isEmpty() && setPasswordField.getText().isEmpty()) {
-            loginMessage.setText("Please enter an username and a password!");
-        } else {
-            if (usernameTextField.getText().isEmpty() || usernameTextField == null) {
-                loginMessage.setText("Please enter an username!");
-            }
-            else
+        if(((String) roleBox.getValue()).equals("Vehicle Owner")) {
+            initVehicleOwner();
+
+            if (usernameTextField.getText().isEmpty() && setPasswordField.getText().isEmpty()) {
+                loginMessage.setText("Please enter an username and a password!");
+            } else {
+                if (usernameTextField.getText().isEmpty() || usernameTextField == null) {
+                    loginMessage.setText("Please enter an username!");
+                }
+                else
                 if (setPasswordField.getText().isEmpty() || setPasswordField == null) {
                     loginMessage.setText("Please enter a password!");
                 }
+            }
+
+            String encoded_password = VehicleOwnerService.encodePassword(usernameTextField.getText(), setPasswordField.getText());
+
+            try {
+                String stored_password = VehicleOwnerService.getHashedUserPassword(usernameTextField.getText());
+                if(stored_password.equals(encoded_password)) {
+                    loginMessage.setText(String.format("Succesfully logged in as %s!",usernameTextField.getText()));
+                }
+                else {
+                    loginMessage.setText("Invalid credentials!");
+                }
+            } catch (UserNotFoundException e) {
+                loginMessage.setText(e.getMessage());
+            }
+
         }
+
+        if(((String) roleBox.getValue()).equals("Company Administrator")) {
+            initCompany();
+
+            if (usernameTextField.getText().isEmpty() && setPasswordField.getText().isEmpty()) {
+                loginMessage.setText("Please enter an username and a password!");
+            } else {
+                if (usernameTextField.getText().isEmpty() || usernameTextField == null) {
+                    loginMessage.setText("Please enter an username!");
+                }
+                else
+                if (setPasswordField.getText().isEmpty() || setPasswordField == null) {
+                    loginMessage.setText("Please enter a password!");
+                }
+            }
+
+            String encoded_password = CompanyService.encodePassword(usernameTextField.getText(), setPasswordField.getText());
+
+            try {
+                String stored_password = CompanyService.getHashedUserPassword(usernameTextField.getText());
+                if(stored_password.equals(encoded_password)) {
+                    loginMessage.setText(String.format("Succesfully logged in as %s!",usernameTextField.getText()));
+                }
+                else {
+                    loginMessage.setText("Invalid credentials!");
+                }
+            } catch (UserNotFoundException e) {
+                loginMessage.setText(e.getMessage());
+            }
+
+        }
+
     }
 
     public void registerButtonOnAction(ActionEvent event) {
