@@ -1,7 +1,11 @@
 package org.fis2021.services;
 
 import org.dizitart.no2.Nitrite;
+import org.dizitart.no2.objects.Cursor;
+import org.dizitart.no2.objects.ObjectFilter;
 import org.dizitart.no2.objects.ObjectRepository;
+import org.dizitart.no2.objects.filters.ObjectFilters;
+import org.fis2021.exceptions.UserNotFoundException;
 import org.fis2021.exceptions.UsernameAlreadyExistsException;
 import org.fis2021.model.Company;
 
@@ -32,7 +36,15 @@ public class CompanyService {
         }
     }
 
-    private static String encodePassword(String salt, String password) {
+    public static Company getCompany(String username) throws UserNotFoundException {
+        Cursor<Company> cursor = companyRepository.find(ObjectFilters.eq("username", username));
+        for(Company company : cursor) {
+            return company;
+        }
+        throw new UserNotFoundException(username);
+    }
+
+    public static String encodePassword(String salt, String password) {
         MessageDigest md = getMessageDigest();
         md.update(salt.getBytes(StandardCharsets.UTF_8));
 
@@ -41,6 +53,10 @@ public class CompanyService {
         // This is the way a password should be encoded when checking the credentials
         return new String(hashedPassword, StandardCharsets.UTF_8)
                 .replace("\"", ""); //to be able to save in JSON format
+    }
+
+    public static String getHashedUserPassword(String username) throws UserNotFoundException {
+        return getCompany(username).getPassword();
     }
 
     private static MessageDigest getMessageDigest() {
