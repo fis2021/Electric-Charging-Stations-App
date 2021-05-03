@@ -24,7 +24,7 @@ public class VehicleOwnerRegistration {
     private Button registerButton;
 
     @FXML
-    private Button exitButton;
+    private Button backToLoginButton;
 
     @FXML
     private TextField firstNameTextField;
@@ -54,9 +54,15 @@ public class VehicleOwnerRegistration {
     private Label registrationMessage;
 
     @FXML
-    void exitButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage) exitButton.getScene().getWindow();
-        stage.close();
+    void backToLoginButtonOnAction(ActionEvent event) {
+        try {
+            Stage stage = (Stage) backToLoginButton.getScene().getWindow();
+            Scene scene = new Scene(loadFXML("Login"), 600, 400);
+            stage.setTitle("Electric Charging Stations Application - Login");
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
