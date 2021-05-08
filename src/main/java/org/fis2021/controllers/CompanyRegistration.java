@@ -29,7 +29,7 @@ public class CompanyRegistration {
     private Button companyButton;
 
     @FXML
-    private Button exitButton;
+    private Button backToLoginButton;
 
     @FXML
     private TextField companyNameTextField;
@@ -58,9 +58,15 @@ public class CompanyRegistration {
     @FXML
     private Label registrationMessage;
 
-    public void exitButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage) exitButton.getScene().getWindow();
-        stage.close();
+    public void backToLoginButtonOnAction(ActionEvent event) {
+        try {
+            Stage stage = (Stage) companyButton.getScene().getWindow();
+            Scene scene = new Scene(loadFXML("Login"), 600, 400);
+            stage.setTitle("Electric Charging Stations Application - Login");
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void registerCompany(ActionEvent event) {
