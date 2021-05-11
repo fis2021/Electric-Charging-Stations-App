@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.AddStationController">
+<AnchorPane prefHeight="400.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.controllers.AddStationController">
    <children>
       <Label layoutX="80.0" layoutY="115.0" text="Company Name :">
          <font>
@@ -33,8 +32,8 @@
       <TextField fx:id="stationNameTextField" layoutX="270.0" layoutY="165.0" prefHeight="26.0" prefWidth="290.0" />
       <TextField fx:id="cityTextField" layoutX="270.0" layoutY="215.0" prefHeight="26.0" prefWidth="290.0" />
       <TextField fx:id="addressTextField" layoutX="270.0" layoutY="265.0" prefHeight="26.0" prefWidth="290.0" />
-      <Button fx:id="addStationButton" layoutX="80.0" layoutY="350.0" mnemonicParsing="false" style="-fx-background-color: #FF6347;" text="Add Station" textFill="WHITE" />
-      <Button fx:id="goBackToHomePageButton" layoutX="400.0" layoutY="350.0" mnemonicParsing="false" style="-fx-background-color: #FF6347;" text="Go back to the Home Page" textFill="WHITE" />
+      <Button fx:id="addStationButton" layoutX="80.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleAddStation" style="-fx-background-color: #FF6347;" text="Add Station" textFill="WHITE" />
+      <Button fx:id="goBackToHomePageButton" layoutX="400.0" layoutY="350.0" mnemonicParsing="false" onAction="#goBackToTheHomePage" style="-fx-background-color: #FF6347;" text="Go back to the Home Page" textFill="WHITE" />
       <AnchorPane prefHeight="80.0" prefWidth="650.0" style="-fx-background-color: #FF8C00;">
          <children>
             <Label layoutX="245.0" layoutY="25.0" text="Add a new station">
@@ -44,7 +43,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="160.0" layoutY="310.0" prefHeight="20.0" prefWidth="330.0" textFill="RED">
+      <Label fx:id="errorMessage" layoutX="160.0" layoutY="310.0" prefHeight="20.0" prefWidth="330.0" textFill="RED">
          <font>
             <Font size="14.0" />
          </font>

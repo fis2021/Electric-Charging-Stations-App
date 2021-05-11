@@ -24,7 +24,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         initDirectory();
         DatabaseService.initDatabase();
-        scene = new Scene(loadFXML("Login"), 600, 400);
+        scene = new Scene(loadFXML("AddStation"), 600, 400);
         stage.setScene(scene);
         stage.setTitle("Electric Charging Stations Application - Login");
         stage.setResizable(false);

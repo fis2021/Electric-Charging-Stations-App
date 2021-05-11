@@ -8,7 +8,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
+import org.fis2021.exceptions.StationAlreadyExistsException;
 import org.fis2021.exceptions.UsernameAlreadyExistsException;
+import org.fis2021.model.Company;
 import org.fis2021.model.Stations;
 import org.fis2021.services.StationsService;
 
@@ -19,6 +21,12 @@ public class CompanyHomeController {
 
     @FXML
     private ListView<AnchorPane> listView;
+
+    private Company company;
+
+    public void setCompany(Company c) {
+        company = c;
+    }
 
     ObservableList list = FXCollections.observableArrayList();
 
@@ -42,12 +50,11 @@ public class CompanyHomeController {
 
         try {
             StationsService.addStation(text.getText());
-        } catch(UsernameAlreadyExistsException ignored) {
+        } catch(StationAlreadyExistsException ignored) {
 
         }
-
-
         listView.getItems().add(container);
+
     }
     public void initialize() {
         ArrayList<String> stations = StationsService.getAllStations();
