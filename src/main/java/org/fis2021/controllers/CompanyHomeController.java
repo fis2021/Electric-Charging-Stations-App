@@ -65,7 +65,10 @@ public class CompanyHomeController {
             container.getChildren().get(1).setLayoutX(740);
             listView.getItems().add(container);
 
-
+            button.setOnAction((event)->{
+                StationsService.deleteStation(station);
+                listView.getItems().remove(container);
+            });
         }
     }
 }

@@ -25,9 +25,9 @@ public class StationsService {
         }
     }
 
-    public static void addStation(String stationName) throws StationAlreadyExistsException {
+    public static void addStation(String stationName, String companyName, String city, String address) throws StationAlreadyExistsException {
         checkStationDoesNotAlreadyExist(stationName);
-        stationsRepository.insert(new Stations(stationName));
+        stationsRepository.insert(new Stations(stationName, companyName, city, address));
     }
 
     public static ArrayList<String> getAllStations() {
@@ -38,4 +38,9 @@ public class StationsService {
         }
         return stationsList;
     }
+
+    public static void deleteStation(String stationName) {
+        stationsRepository.remove(ObjectFilters.eq("stationName", stationName));
+    }
+
 }

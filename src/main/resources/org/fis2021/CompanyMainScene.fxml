@@ -30,7 +30,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <Button layoutY="100.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #00FF00;" text="+ NEW STATION">
+      <Button fx:id="newStationButton" layoutY="100.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #00FF00;" text="+ NEW STATION">
          <font>
             <Font size="20.0" />
          </font>

@@ -1,12 +1,20 @@
 package org.fis2021.model;
 
+import org.dizitart.no2.objects.Id;
+
 import java.util.Objects;
 
 public class Stations {
-    private String stationName, companyName, city, address;
+    @Id
+    private String stationName;
 
-    public Stations(String stationName) {
+    private String companyName, city, address;
+
+    public Stations(String stationName, String companyName, String city, String address) {
         this.stationName = stationName;
+        this.companyName = companyName;
+        this.city = city;
+        this.address = address;
     }
 
     public Stations() {
