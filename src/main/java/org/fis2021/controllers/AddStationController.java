@@ -11,11 +11,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import org.fis2021.exceptions.StationAlreadyExistsException;
 import org.fis2021.exceptions.UsernameAlreadyExistsException;
 import org.fis2021.model.Company;
 import org.fis2021.services.StationsService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.fis2021.App.loadFXML;
 
@@ -60,16 +62,21 @@ public class AddStationController {
         String stationName = stationNameTextField.getText();
         String city = cityTextField.getText();
         String address = addressTextField.getText();
-
+        StationsService.initStations();
         if(companyName.isEmpty() || stationName.isEmpty() || city.isEmpty() || address.isEmpty()) {
             errorMessage.setText("Please fill all the fields!");
         }
+        Label text = new Label();
+        text.setText(stationName);
+        try {
+            StationsService.addStation(text.getText(), companyName,city,address);
+        } catch(StationAlreadyExistsException ignored) {
 
+        }
     }
 
     public void goBackToTheHomePage(ActionEvent event) {
         try {
-            StationsService.initStations();
             Stage stage = (Stage) goBackToHomePageButton.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/fis2021/CompanyMainScene.fxml"));
             Parent homeRoot = loader.load();
