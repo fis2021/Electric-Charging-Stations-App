@@ -4,11 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.fis2021.exceptions.StationAlreadyExistsException;
 import org.fis2021.exceptions.UsernameAlreadyExistsException;
@@ -19,6 +17,7 @@ import org.fis2021.services.StationsService;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.fis2021.App.loadFXML;
 
@@ -66,8 +65,17 @@ public class CompanyHomeController {
             listView.getItems().add(container);
 
             button.setOnAction((event)->{
-                StationsService.deleteStation(station);
-                listView.getItems().remove(container);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete Station");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to delete this station?");
+                Button yes_button = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                yes_button.setDefaultButton(false);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get().equals(ButtonType.OK)) {
+                    StationsService.deleteStation(station);
+                    listView.getItems().remove(container);
+                }
             });
         }
     }
