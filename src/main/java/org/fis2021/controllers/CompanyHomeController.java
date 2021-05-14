@@ -27,6 +27,12 @@ public class CompanyHomeController {
     private Button newStationButton;
 
     @FXML
+    private Button overviewButton;
+
+    @FXML
+    private Button logoutButton;
+
+    @FXML
     private ListView<AnchorPane> listView;
 
     private Company company;
@@ -48,8 +54,33 @@ public class CompanyHomeController {
         }
     }
 
+    public void handleButtonActionOverview() {
+        try {
+            Stage stage = (Stage) overviewButton.getScene().getWindow();
+            Scene scene = new Scene(loadFXML("StationsOverview"),800,700);
+            stage.setTitle("Electric Charging Stations Application - Stations Overview");
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void logoutButtonOnAction() throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to log out?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get().equals(ButtonType.OK)) {
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
+            Scene scene = new Scene(loadFXML("login"), 600, 400);
+            stage.setTitle("Electric Charging Stations Application - Stations Overview");
+            stage.setScene(scene);
+        }
+    }
+
     public void initialize() {
-        ArrayList<String> stations = StationsService.getAllStations();
+        ArrayList<String> stations = StationsService.getAllStationsFromCompany();
         list.addAll(stations);
         for(String station : stations) {
             int index = listView.getItems().size()+1;
