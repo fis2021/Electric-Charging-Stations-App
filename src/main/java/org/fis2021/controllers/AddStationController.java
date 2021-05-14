@@ -58,19 +58,18 @@ public class AddStationController {
     }
 
     public void handleAddStation() {
-        String companyName = companyNameTextField.getText();
         String stationName = stationNameTextField.getText();
         String city = cityTextField.getText();
         String address = addressTextField.getText();
         StationsService.initStations();
-        if(companyName.isEmpty() || stationName.isEmpty() || city.isEmpty() || address.isEmpty()) {
+        if(stationName.isEmpty() || city.isEmpty() || address.isEmpty()) {
             errorMessage.setText("Please fill in all the fields!");
         }
         else {
             Label text = new Label();
             text.setText(stationName);
             try {
-                StationsService.addStation(text.getText(), companyName,city,address);
+                StationsService.addStation(text.getText(),city,address);
             } catch(StationAlreadyExistsException ignored) {
 
             }
