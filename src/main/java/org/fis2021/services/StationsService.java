@@ -43,7 +43,7 @@ public class StationsService {
         Cursor<Stations> cursor = stationsRepository.find();
         for(Stations stations : cursor) {
             if(stations.getCompanyName().equals(ApplicationHelper.companyName))
-            stationsList.add(stations.getStationName());
+                stationsList.add(stations.getStationName());
         }
         return stationsList;
     }
@@ -52,7 +52,8 @@ public class StationsService {
         ArrayList<Stations> stationsList = new ArrayList<>();
         Cursor<Stations> cursor = stationsRepository.find();
         for(Stations stations : cursor) {
-            stationsList.add(stations);
+            if(stations.getCompanyName().equals(ApplicationHelper.companyName))
+                stationsList.add(stations);
         }
         return stationsList;
     }

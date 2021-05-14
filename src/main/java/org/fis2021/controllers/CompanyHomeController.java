@@ -30,6 +30,9 @@ public class CompanyHomeController {
     private Button overviewButton;
 
     @FXML
+    private Button logoutButton;
+
+    @FXML
     private ListView<AnchorPane> listView;
 
     private Company company;
@@ -59,6 +62,20 @@ public class CompanyHomeController {
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void logoutButtonOnAction() throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to log out?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get().equals(ButtonType.OK)) {
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
+            Scene scene = new Scene(loadFXML("login"), 600, 400);
+            stage.setTitle("Electric Charging Stations Application - Stations Overview");
+            stage.setScene(scene);
         }
     }
 

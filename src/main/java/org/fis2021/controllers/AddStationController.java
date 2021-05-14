@@ -70,10 +70,10 @@ public class AddStationController {
             text.setText(stationName);
             try {
                 StationsService.addStation(text.getText(),city,address);
+                errorMessage.setText("Station Added Succesfully!");
             } catch(StationAlreadyExistsException ignored) {
-
+                errorMessage.setText("Station already exists with the same username!");
             }
-            errorMessage.setText("Station Added Succesfully!");
         }
 
     }
