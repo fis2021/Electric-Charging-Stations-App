@@ -10,11 +10,14 @@ public class Stations {
 
     private String companyName, city, address;
 
+    private boolean stationAvailability;
+
     public Stations(String stationName, String companyName, String city, String address) {
         this.stationName = stationName;
         this.companyName = companyName;
         this.city = city;
         this.address = address;
+        this.stationAvailability = false;
     }
 
     public Stations() {
@@ -47,6 +50,14 @@ public class Stations {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setStationAvailability(boolean select) {
+        this.stationAvailability = select;
+    }
+
+    public boolean getStationAvailability() {
+        return this.stationAvailability;
     }
 
     @Override

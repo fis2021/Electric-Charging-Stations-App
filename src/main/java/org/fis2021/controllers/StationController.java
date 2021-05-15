@@ -4,7 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.dizitart.no2.objects.ObjectRepository;
 import org.fis2021.ApplicationHelper;
+import org.fis2021.model.Stations;
+import org.fis2021.services.StationsService;
 
 import java.io.IOException;
 
@@ -46,7 +49,6 @@ public class StationController {
         hourBox.getItems().addAll(hour);
         minuteBox.getItems().addAll(min);
         secondBox.getItems().addAll(sec);
-        System.out.println(ApplicationHelper.stationName);
         stationNameLabel.setText(ApplicationHelper.stationName);
     }
 
@@ -60,7 +62,13 @@ public class StationController {
             ApplicationHelper.stationHour = hourBox.getValue();
             ApplicationHelper.stationMinute = minuteBox.getValue();
             ApplicationHelper.stationSecond = secondBox.getValue();
-            ApplicationHelper.stationSelected = true;
+
+            Stations station = StationsService.getExactStationFromCity(ApplicationHelper.stationName, ApplicationHelper.stationCity);
+            assert station != null;
+            station.setStationAvailability(true);
+            ObjectRepository<Stations> objRepo = StationsService.getStationsRepository();
+            objRepo.update(station);
+
             // Go back to the user main scene
             Stage stage = (Stage) okButton.getScene().getWindow();
             Scene scene = new Scene(loadFXML("UserMainScene"), 1000, 700);
