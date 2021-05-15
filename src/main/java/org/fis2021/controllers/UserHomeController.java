@@ -12,25 +12,15 @@ import javafx.stage.Stage;
 
 import org.controlsfx.control.textfield.TextFields;
 
-import org.fis2021.exceptions.UserNotFoundException;
-
-import org.fis2021.model.Company;
-import org.fis2021.model.Stations;
-import org.fis2021.model.VehicleOwner;
+import org.fis2021.ApplicationHelper;
 
 import org.fis2021.services.StationsService;
-import org.fis2021.services.VehicleOwnerService;
-import org.fis2021.services.VehicleOwnerService;
-import org.fis2021.services.CompanyService;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 import static org.fis2021.App.loadFXML;
-import static org.fis2021.services.CompanyService.initCompany;
-import static org.fis2021.services.VehicleOwnerService.initVehicleOwner;
 
 
 public class UserHomeController implements Initializable {
@@ -109,6 +99,12 @@ public class UserHomeController implements Initializable {
         buttonStation.setLayoutY(buttonY);
     }
 
+    public void moveStationToBusy(String station) {
+        AnchorPane root = busyAnchorPane;
+        root.getChildren().clear();
+        root.getChildren().add(busyLabel);
+    }
+
     public void selectRegionOnAction() {
         ArrayList<String> stations = StationsService.getAllStationsFromCity(selectRegion.getText());
 
@@ -126,26 +122,34 @@ public class UserHomeController implements Initializable {
             Ellipse ellipse = new Ellipse();
             Button button = new Button();
 
+            // Add button at the right place
             if (posEllipseX > 415 && posButtonX > 375) {
                 posButtonX = 45.0;
                 posEllipseX = 85.0;
-
                 posButtonY = posButtonY + 90.0;
                 posEllipseY = posEllipseY + 90.0;
-
                 row = row + 1;
             }
-
             if (row == 7) {
                 break;
             }
 
             customizeNewButtonForStation(ellipse, button, posEllipseX, posEllipseY, station, posButtonX, posButtonY);
-
             posEllipseX = posEllipseX + 110.0;
             posButtonX = posButtonX + 110.0;
 
             root.getChildren().addAll(ellipse, button);
+
+            // Create event for button
+            button.setOnAction(actionEvent -> {
+                ApplicationHelper.stationName = station;
+                try {
+                    Stage stage = (Stage) button.getScene().getWindow();
+                    Scene scene = new Scene(loadFXML("StationScene"), 400, 400);
+                    stage.setTitle("Electric Charging Stations Application - Station Scene");
+                    stage.setScene(scene);
+                } catch (IOException ignored) { }
+            } );
         }
     }
 
@@ -163,7 +167,7 @@ public class UserHomeController implements Initializable {
         if (result.get().equals(ButtonType.OK)) {
             Stage stage = (Stage) logOutButton.getScene().getWindow();
             Scene scene = new Scene(loadFXML("login"), 600, 400);
-            stage.setTitle("Electric Charging Stations Application - Stations Overview");
+            stage.setTitle("Electric Charging Stations Application - Stations");
             stage.setScene(scene);
         }
     }
