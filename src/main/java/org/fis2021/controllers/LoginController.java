@@ -82,12 +82,16 @@ public class LoginController {
             try {
                 String stored_password = VehicleOwnerService.getHashedUserPassword(usernameTextField.getText());
                 if(stored_password.equals(encoded_password)) {
-                    loginMessage.setText(String.format("Succesfully logged in as %s!",usernameTextField.getText()));
+                    loginMessage.setText(String.format("Successfully logged in as %s!", usernameTextField.getText()));
+                    Stage stage = (Stage) loginButton.getScene().getWindow();
+                    Scene scene = new Scene(loadFXML("UserMainScene"), 1000, 700);
+                    stage.setTitle("Electric Charging Stations Application - User Home Page");
+                    stage.setScene(scene);
                 }
                 else {
                     loginMessage.setText("Invalid credentials!");
                 }
-            } catch (UserNotFoundException e) {
+            } catch (UserNotFoundException | IOException e) {
                 loginMessage.setText(e.getMessage());
             }
 

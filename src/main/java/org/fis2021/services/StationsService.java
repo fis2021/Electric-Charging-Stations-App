@@ -66,6 +66,16 @@ public class StationsService {
         }
         return stationsList;
     }
+  
+    public static ArrayList<String> getAllStationsFromCity(String city) {
+        ArrayList<String> stationsList = new ArrayList<>();
+        Cursor<Stations> cursor = stationsRepository.find();
+        for(Stations stations : cursor) {
+            if(stations.getCity().equals(city))
+                stationsList.add(stations.getStationName());
+        }
+        return stationsList;
+    }
 
     public static void deleteStation(String stationName) {
         stationsRepository.remove(ObjectFilters.eq("stationName", stationName));
