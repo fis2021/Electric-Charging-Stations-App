@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import static org.fis2021.App.loadFXML;
 import static org.fis2021.services.CompanyService.initCompany;
+import static org.fis2021.services.StationsService.initStations;
 import static org.fis2021.services.VehicleOwnerService.initVehicleOwner;
 
 public class LoginController {
@@ -57,6 +58,7 @@ public class LoginController {
     public void loginButtonOnAction(ActionEvent event) {
         initVehicleOwner();
         initCompany();
+        initStations();
         if(roleBox.getValue() == null) {
             loginMessage.setText("Please choose a role!");
         }
