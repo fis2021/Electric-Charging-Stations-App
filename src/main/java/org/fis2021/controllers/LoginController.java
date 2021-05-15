@@ -9,11 +9,11 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ChoiceBox;
+import org.fis2021.ApplicationHelper;
 import org.fis2021.exceptions.UserNotFoundException;
-import org.fis2021.model.VehicleOwner;
+import org.fis2021.model.Company;
 import org.fis2021.services.VehicleOwnerService;
 
-import org.fis2021.services.VehicleOwnerService;
 import org.fis2021.services.CompanyService;
 
 import java.io.IOException;
@@ -116,16 +116,20 @@ public class LoginController {
 
             try {
                 String stored_password = CompanyService.getHashedUserPassword(usernameTextField.getText());
-                if(stored_password.equals(encoded_password)) {
-                    loginMessage.setText(String.format("Succesfully logged in as %s!",usernameTextField.getText()));
+                if (stored_password.equals(encoded_password)) {
+                    Company company = CompanyService.getCompany(usernameTextField.getText());
+                    ApplicationHelper.companyName = company.getCompanyName();
+                    loginMessage.setText(String.format("Succesfully logged in as %s!", usernameTextField.getText()));
+                    Stage stage = (Stage) loginButton.getScene().getWindow();
+                    Scene scene = new Scene(loadFXML("CompanyMainScene"), 800, 700);
+                    stage.setTitle("Electric Charging Stations Application - Company Home Page");
+                    stage.setScene(scene);
+                } else {
+                    loginMessage.setText("Invalid Credentials!");
+                  }
+                } catch (UserNotFoundException | IOException e) {
+                    loginMessage.setText(e.getMessage());
                 }
-                else {
-                    loginMessage.setText("Invalid credentials!");
-                }
-            } catch (UserNotFoundException e) {
-                loginMessage.setText(e.getMessage());
-            }
-
         }
 
     }
@@ -140,5 +144,4 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-
 }
