@@ -6,6 +6,8 @@ import org.fis2021.model.Company;
 import org.fis2021.model.Stations;
 import org.fis2021.model.VehicleOwner;
 
+import java.io.File;
+
 import static org.fis2021.services.FileSystemService.getPathToFile;
 
 public class DatabaseService {
@@ -16,6 +18,7 @@ public class DatabaseService {
     private static ObjectRepository<Stations> stationsRepository;
 
     public static void initDatabase() {
+        FileSystemService.initDirectory();
         database = Nitrite.builder()
                 .filePath(getPathToFile("register.db").toFile())
                 .openOrCreate("test", "test");
