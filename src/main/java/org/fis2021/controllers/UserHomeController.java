@@ -52,6 +52,12 @@ public class UserHomeController implements Initializable {
     @FXML
     private AnchorPane busyAnchorPane;
 
+    @FXML
+    private Label availableLabel;
+
+    @FXML
+    private Label busyLabel;
+
 
     private final String[] regions = {"Abrud","Adjud","Agnita","Aiud","Alba Iulia","Alesd","Alexandria","Amara","Anina","Aninoasa","Arad","Ardud","Avrig","Azuga",
             "Babadag","Babeni","Bacau","Baia de Arama","Baia de Aries","Baia Mare","Baia Sprie","Baicoi","Baile Govora","Baile Herculane","Baile Olanesti","Baile Tusnad",
@@ -107,6 +113,8 @@ public class UserHomeController implements Initializable {
         ArrayList<String> stations = StationsService.getAllStationsFromCity(selectRegion.getText());
 
         AnchorPane root = availableAnchorPane;
+        root.getChildren().clear();
+        root.getChildren().add(availableLabel);
 
         double posButtonX = 45.0;
         double posButtonY = 110.0;
