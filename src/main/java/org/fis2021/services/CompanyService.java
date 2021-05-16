@@ -44,6 +44,14 @@ public class CompanyService {
         throw new UserNotFoundException(username);
     }
 
+    public static Company getCompanyByName(String compName) {
+        Cursor<Company> cursor = companyRepository.find(ObjectFilters.eq("companyName", compName));
+        for(Company company : cursor) {
+            return company;
+        }
+        return null;
+    }
+
     public static String encodePassword(String salt, String password) {
         MessageDigest md = getMessageDigest();
         md.update(salt.getBytes(StandardCharsets.UTF_8));

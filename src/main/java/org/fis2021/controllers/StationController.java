@@ -14,7 +14,10 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.fis2021.ApplicationHelper;
+import org.fis2021.model.Company;
 import org.fis2021.model.Stations;
+import org.fis2021.services.CompanyService;
+import org.fis2021.services.MailService;
 import org.fis2021.services.StationsService;
 
 import java.io.IOException;
@@ -60,6 +63,11 @@ public class StationController {
     private final Integer[] sec = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
             26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59};
 
+    private final String user = "batmanslappsbutter.17@gmail.com";
+    private final String pass = "abracadabra2021";
+    private final String subject = "Report for malfunctioning station";
+    private final String message = "The station " + ApplicationHelper.stationName + " is malfunctioning. PLease check!";
+
 
     public void initialize() {
         hourBox.getItems().addAll(hour);
@@ -101,12 +109,25 @@ public class StationController {
                 alert.setContentText("Are you sure you want to report a malfunction at this station?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get().equals(ButtonType.OK)) {
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Report sent");
-                    alert.setHeaderText("Message");
-                    alert.setContentText("Alert Message");
-                    alert.setContentText("Report sent successfully!");
-                    result = alert.showAndWait();
+                    Company company = CompanyService.getCompanyByName(ApplicationHelper.companyName);
+                    if (company != null) {
+                        MailService mailService = new MailService(user, pass, company.getEmail());
+                        mailService.sendFromGMail(mailService.getUser(), mailService.getPass(), mailService.getRecipient(), subject, message);
+
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Report sent");
+                        alert.setHeaderText("Message");
+                        alert.setContentText("Alert Message");
+                        alert.setContentText("Report sent successfully!");
+                        result = alert.showAndWait();
+                    } else {
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Report sent");
+                        alert.setHeaderText("Message");
+                        alert.setContentText("Alert Message");
+                        alert.setContentText("Report failed. Please try again later!");
+                        result = alert.showAndWait();
+                    }
                     if (result.get().equals(ButtonType.OK)) {
                         Stage stage = (Stage) reportButton.getScene().getWindow();
                         Scene scene = null;
