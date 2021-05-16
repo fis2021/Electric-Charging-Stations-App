@@ -94,7 +94,7 @@ public class CompanyRegistration {
     public void registerComp() throws IOException {
         initCompany();
         if (companyNameTextField.getText().isEmpty() || countryOfOriginTextField.getText().isEmpty() || addressTextField.getText().isEmpty() || usernameTextField.getText().isEmpty() || setPasswordField.getText().isEmpty() || emailTextField.getText().isEmpty() || telephoneNumberTextField.getText().isEmpty() || faxNumberTextField.getText().isEmpty()) {
-            registrationMessage.setText("Please fil in all the fields!");
+            registrationMessage.setText("Please fill in all the fields!");
         } else {
             try {
                 CompanyService.addCompany(companyNameTextField.getText(), countryOfOriginTextField.getText(), addressTextField.getText(), usernameTextField.getText(), setPasswordField.getText(), emailTextField.getText(), telephoneNumberTextField.getText(), faxNumberTextField.getText());
