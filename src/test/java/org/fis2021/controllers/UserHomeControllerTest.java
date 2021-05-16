@@ -33,10 +33,11 @@ class UserHomeControllerTest {
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
         DatabaseService.initDatabase();
         VehicleOwnerService.initVehicleOwner();
+        CompanyService.initCompany();
     }
 
     @Start
-    void start(Stage stage) throws IOException{
+    void start(Stage stage) throws IOException {
         Scene scene = new Scene(loadFXML("Login"), 600, 400);
         stage.setTitle("Electric Charging Stations App - Login");
         stage.setScene(scene);
@@ -50,7 +51,7 @@ class UserHomeControllerTest {
     }
 
     @Test
-    void testLogoutButton(FxRobot robot) throws UsernameAlreadyExistsException{
+    void testLogoutButton(FxRobot robot) throws UsernameAlreadyExistsException {
         VehicleOwnerService.addVehicleOwner("Grigore", "Balbagian", "grib.balbi@gmail.com", "balbagi", "123456789", "Tesla Model X", "Full electric", "2020");
         robot.clickOn("#username");
         robot.write("balbagi");
@@ -65,7 +66,7 @@ class UserHomeControllerTest {
     }
 
     @Test
-    void testMostPopularStationButton(FxRobot robot) throws UsernameAlreadyExistsException{
+    void testMostPopularStationButton(FxRobot robot) throws UsernameAlreadyExistsException {
         VehicleOwnerService.addVehicleOwner("Grigore", "Balbagian", "grib.balbi@gmail.com", "balbagi", "123456789", "Tesla Model X", "Full electric", "2020");
         robot.clickOn("#username");
         robot.write("balbagi");
@@ -81,7 +82,7 @@ class UserHomeControllerTest {
     }
 
     @Test
-    void testSelectRegionTextField(FxRobot robot) throws UsernameAlreadyExistsException{
+    void testSelectRegionTextField(FxRobot robot) throws UsernameAlreadyExistsException {
         VehicleOwnerService.addVehicleOwner("Grigore", "Balbagian", "grib.balbi@gmail.com", "balbagi", "123456789", "Tesla Model X", "Full electric", "2020");
         robot.clickOn("#username");
         robot.write("balbagi");
@@ -98,5 +99,45 @@ class UserHomeControllerTest {
         robot.clickOn("#logoutButton");
         robot.clickOn("OK");
         FxAssert.verifyThat("#exit", NodeMatchers.isVisible());
+    }
+
+    @Test
+    void testStationButtonAndBack(FxRobot robot) throws UsernameAlreadyExistsException {
+        CompanyService.addCompany("Compania1", "Romania", "Lalelelor", "Compa1", "12345", "compania1@gmail.com", "0256458697", "+40 265");
+        robot.clickOn("#username");
+        robot.write("Compa1");
+        robot.clickOn("#password");
+        robot.write("12345");
+        robot.clickOn("#role");
+        robot.clickOn("Company Administrator");
+        robot.clickOn("#login");
+        robot.clickOn("#addNewStation");
+        robot.clickOn("#stationName");
+        robot.write("Statie 01");
+        robot.clickOn("#cityName");
+        robot.write("Timisoara");
+        robot.clickOn("#address");
+        robot.write("Str Sinaia");
+        robot.clickOn("#addStation");
+        robot.clickOn("#returnToHome");
+        robot.clickOn("#logoutButton");
+        robot.clickOn("OK");
+
+        VehicleOwnerService.addVehicleOwner("Grigore", "Balbagian", "grib.balbi@gmail.com", "balbagi", "123456789", "Tesla Model X", "Full electric", "2020");
+        robot.clickOn("#username");
+        robot.write("balbagi");
+        robot.clickOn("#password");
+        robot.write("123456789");
+        robot.clickOn("#role");
+        robot.clickOn("Vehicle Owner");
+        robot.clickOn("#login");
+        robot.clickOn("#selectField");
+        robot.write("Timisoara");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        robot.clickOn("Timisoara");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        robot.clickOn("Statie 01");
+        robot.clickOn("#backButton");
+        FxAssert.verifyThat("#logoutButton", NodeMatchers.isVisible());
     }
 }
