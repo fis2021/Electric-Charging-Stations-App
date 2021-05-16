@@ -53,6 +53,13 @@ public class TimerService {
     public void updateTimer(Stations station) {
         timeLeft.set(timeLeft.get().subtract(Duration.seconds(1)));
 
+        // Set availability field from station if timer is 0
+        if (getTimeStringFromDuration(timeLeft.get()).equals("00:00:00")) {
+            station.setStationAvailability(false);
+        }
+
+        // Save countdown timer in db
+        setDataBaseTimer(station, timeLabel.getText());
     }
 
     public String getTimeStringFromDuration(Duration duration) {
@@ -71,7 +78,19 @@ public class TimerService {
         second %= 60;
         String ddSecond = dFormat.format(second);
 
-        //System.out.println(ddHour + ":" + ddMinute + ":" + ddSecond);
         return ddHour + ":" + ddMinute + ":" + ddSecond;
+    }
+
+    public void setDataBaseTimer(Stations station, String time) {
+        int hour = Integer.parseInt(time.substring(0, 2));
+        int min = Integer.parseInt(time.substring(3, 5));
+        int sec = Integer.parseInt(time.substring(6));
+
+        station.setHour(hour);
+        station.setMinute(min);
+        station.setSecond(sec);
+
+        ObjectRepository<Stations> objRepo = StationsService.getStationsRepository();
+        objRepo.update(station);
     }
 }

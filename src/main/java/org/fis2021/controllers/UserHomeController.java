@@ -1,5 +1,6 @@
 package org.fis2021.controllers;
 
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -13,9 +14,12 @@ import javafx.stage.Stage;
 
 import org.controlsfx.control.textfield.TextFields;
 
+import org.dizitart.no2.objects.ObjectRepository;
 import org.fis2021.ApplicationHelper;
 
+import org.fis2021.model.Stations;
 import org.fis2021.services.StationsService;
+import org.fis2021.services.TimerService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -50,6 +54,10 @@ public class UserHomeController implements Initializable {
     @FXML
     private Label busyLabel;
 
+
+    private final Hashtable<String,Label> countdownLabels = new Hashtable<>();
+
+    private final DecimalFormat dFormat = new DecimalFormat("00");
 
     private final String[] regions = {"Abrud","Adjud","Agnita","Aiud","Alba Iulia","Alesd","Alexandria","Amara","Anina","Aninoasa","Arad","Ardud","Avrig","Azuga",
             "Babadag","Babeni","Bacau","Baia de Arama","Baia de Aries","Baia Mare","Baia Sprie","Baicoi","Baile Govora","Baile Herculane","Baile Olanesti","Baile Tusnad",
@@ -124,7 +132,7 @@ public class UserHomeController implements Initializable {
         labelName.setLayoutY(labelNameY);
 
         // Label countdown
-        labelCountdown.setText(labelText);
+        //labelCountdown.setText() will be set in the moveStationToBusy func
         labelCountdown.setStyle("-fx-background-color: transparent;");
         labelCountdown.setTextFill(Color.WHITE);
         labelCountdown.setAlignment(Pos.CENTER);
@@ -133,7 +141,6 @@ public class UserHomeController implements Initializable {
         labelCountdown.setPrefWidth(80.0);
         labelCountdown.setLayoutX(labelCountdownX);
         labelCountdown.setLayoutY(labelCountdownY);
-        // labelCountdown.setText() will be set in the moveStationToBusy func
     }
 
     public void selectRegionOnAction() {
@@ -160,8 +167,8 @@ public class UserHomeController implements Initializable {
             if (posEllipseX > 415 && posButtonX > 375) {
                 posButtonX = 45.0;
                 posEllipseX = 85.0;
-                posButtonY = posButtonY + 90.0;
-                posEllipseY = posEllipseY + 90.0;
+                posButtonY += 90.0;
+                posEllipseY += 90.0;
                 row = row + 1;
             }
             if (row == 7) {
@@ -169,8 +176,8 @@ public class UserHomeController implements Initializable {
             }
 
             customizeButtonAvailableStation(ellipse, button, posEllipseX, posEllipseY, station, posButtonX, posButtonY);
-            posEllipseX = posEllipseX + 110.0;
-            posButtonX = posButtonX + 110.0;
+            posEllipseX += 110.0;
+            posButtonX += 110.0;
 
             // Root takes children into custody
             root.getChildren().addAll(ellipse, button);
@@ -189,15 +196,12 @@ public class UserHomeController implements Initializable {
         }
     }
 
-
     public void moveStationToBusy() {
         ArrayList<String> stationsBusy = StationsService.getAllBusyStationsFromCity(selectRegion.getText());
 
         AnchorPane root = busyAnchorPane;
         root.getChildren().clear();
         root.getChildren().add(busyLabel);
-
-        DecimalFormat dFormat = new DecimalFormat("00");
 
         double posLabelNameX = 45.0;
         double posLabelNameY = 110.0;
@@ -217,9 +221,9 @@ public class UserHomeController implements Initializable {
                 posEllipseX = 85.0;
                 posLabelNameX = 45.0;
                 posLabelCountdownX = 45.0;
-                posEllipseY = posEllipseY + 90.0;
-                posLabelNameY = posLabelNameY + 90.0;
-                posLabelCountdownY = posLabelCountdownY + 90.0;
+                posEllipseY += 90.0;
+                posLabelNameY += 90.0;
+                posLabelCountdownY += 90.0;
                 row = row + 1;
             }
             if (row == 7) {
@@ -227,19 +231,38 @@ public class UserHomeController implements Initializable {
             }
 
             customizeBusyStation(ellipse, labelName, labelCountdown, posEllipseX, posEllipseY, station, posLabelNameX, posLabelNameY, posLabelCountdownX, posLabelCountdownY);
-            posEllipseX = posEllipseX + 110.0;
-            posLabelNameX = posLabelNameX + 110.0;
-            posLabelCountdownX = posLabelCountdownX + 110.0;
+            posEllipseX += 110.0;
+            posLabelNameX += 110.0;
+            posLabelCountdownX += 110.0;
 
-            String ddHour = dFormat.format(ApplicationHelper.stationHour);
-            String ddMinute = dFormat.format(ApplicationHelper.stationMinute);
-            String ddSecond = dFormat.format(ApplicationHelper.stationSecond);
-            labelCountdown.setText(ddHour + ":" + ddMinute + ":" + ddSecond);
+            // Memorize the count labels
+            countdownLabels.put(station, labelCountdown);
 
             // Root takes children into custody
             root.getChildren().addAll(ellipse, labelName, labelCountdown);
         }
+
+        // Start countdown
+        startCountDown();
     }
+
+    public void startCountDown () {
+        ArrayList<String> stations = StationsService.getAllBusyStations();
+        Set<String> setOfStations = countdownLabels.keySet();
+
+        for (String station : setOfStations) {
+            if (stations.contains(station)) {
+                Stations dbStation = StationsService.getExactStationFromCity(station, selectRegion.getText());
+                if (dbStation != null) {
+                    // Generate countdown process
+                    TimerService timerCountdown = new TimerService(countdownLabels.get(station), dbStation);
+                    timerCountdown.startTimer(dbStation.getHour() * 3600 + dbStation.getMinute() * 60 + dbStation.getSecond());
+                    timerCountdown.initialize();
+                }
+            }
+        }
+    }
+
 
     public void popularButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) popularButton.getScene().getWindow();

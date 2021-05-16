@@ -103,6 +103,17 @@ public class StationsService {
         return null;
     }
 
+    public static ArrayList<String> getAllBusyStations() {
+        ArrayList<String> stationsList = new ArrayList<>();
+        Cursor<Stations> cursor = stationsRepository.find();
+        for(Stations stations : cursor) {
+            if(stations.getStationAvailability()) {
+                stationsList.add(stations.getStationName());
+            }
+        }
+        return stationsList;
+    }
+
     public static void deleteStation(String stationName) {
         stationsRepository.remove(ObjectFilters.eq("stationName", stationName));
     }

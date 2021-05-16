@@ -55,19 +55,21 @@ public class StationController {
     public void okButtonOnAction() throws IOException {
 
         if (hourBox.getValue() == null || minuteBox.getValue() == null || secondBox.getValue() == null) {
-            selectBoxMessageLabel.setText("Please fill in the fields for time!");
-        } else if (hourBox.getValue() == 0 && minuteBox.getValue() == 0 && secondBox.getValue() == 0) {
+            selectBoxMessageLabel.setText("Please fill in the fields!");
+        }
+        if (hourBox.getValue() == 0 && minuteBox.getValue() == 0 && secondBox.getValue() == 0) {
             selectBoxMessageLabel.setText("The time cannot be 0!");
         } else {
-            ApplicationHelper.stationHour = hourBox.getValue();
-            ApplicationHelper.stationMinute = minuteBox.getValue();
-            ApplicationHelper.stationSecond = secondBox.getValue();
-
             Stations station = StationsService.getExactStationFromCity(ApplicationHelper.stationName, ApplicationHelper.stationCity);
-            assert station != null;
-            station.setStationAvailability(true);
-            ObjectRepository<Stations> objRepo = StationsService.getStationsRepository();
-            objRepo.update(station);
+            if (station != null) {
+                station.setHour(hourBox.getValue());
+                station.setMinute(minuteBox.getValue());
+                station.setSecond(secondBox.getValue());
+                station.setStationAvailability(true);
+
+                ObjectRepository<Stations> objRepo = StationsService.getStationsRepository();
+                objRepo.update(station);
+            }
 
             // Go back to the user main scene
             Stage stage = (Stage) okButton.getScene().getWindow();
@@ -76,8 +78,6 @@ public class StationController {
             stage.setScene(scene);
         }
     }
-
-
 
     public void backButtonOnAction() throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();

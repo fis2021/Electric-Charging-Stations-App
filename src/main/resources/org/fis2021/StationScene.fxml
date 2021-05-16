@@ -32,8 +32,8 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="hourBox" layoutX="136.0" layoutY="155.0" prefHeight="20.0" prefWidth="50.0" />
-      <ComboBox fx:id="minuteBox" layoutX="195.0" layoutY="155.0" prefHeight="20.0" prefWidth="50.0" />
-      <ComboBox fx:id="secondBox" layoutX="255.0" layoutY="155.0" prefHeight="20.0" prefWidth="50.0" />
+      <ComboBox fx:id="hourBox" layoutX="133.0" layoutY="155.0" prefHeight="25.0" prefWidth="55.0" />
+      <ComboBox fx:id="minuteBox" layoutX="195.0" layoutY="155.0" prefHeight="20.0" prefWidth="55.0" />
+      <ComboBox fx:id="secondBox" layoutX="255.0" layoutY="155.0" prefHeight="20.0" prefWidth="55.0" />
    </children>
 </AnchorPane>
