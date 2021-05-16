@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.controllers.StationController">
+<AnchorPane fx:id="stationAnchorPane" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.controllers.StationController">
    <children>
-      <Label fx:id="stationNameLabel" alignment="CENTER" prefHeight="90.0" prefWidth="400.0" style="-fx-background-color: #c690c6; -fx-border-color: black;">
+      <Label fx:id="stationNameLabel" alignment="TOP_CENTER" prefHeight="90.0" prefWidth="400.0" style="-fx-background-color: #c690c6; -fx-border-color: black;">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
@@ -35,5 +35,6 @@
       <ComboBox fx:id="hourBox" layoutX="133.0" layoutY="155.0" prefHeight="25.0" prefWidth="55.0" />
       <ComboBox fx:id="minuteBox" layoutX="195.0" layoutY="155.0" prefHeight="20.0" prefWidth="55.0" />
       <ComboBox fx:id="secondBox" layoutX="255.0" layoutY="155.0" prefHeight="20.0" prefWidth="55.0" />
+      <Label fx:id="stationStreetLabel" alignment="CENTER" layoutX="20.0" layoutY="60.0" prefHeight="25.0" prefWidth="360.0" textAlignment="CENTER" />
    </children>
 </AnchorPane>

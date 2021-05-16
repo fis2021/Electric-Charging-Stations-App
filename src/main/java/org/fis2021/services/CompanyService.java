@@ -45,6 +45,14 @@ public class CompanyService {
         throw new UserNotFoundException(username);
     }
 
+    public static Company getCompanyByName(String compName) {
+        Cursor<Company> cursor = companyRepository.find(ObjectFilters.eq("companyName", compName));
+        for(Company company : cursor) {
+            return company;
+        }
+        return null;
+    }
+
     public static List<Company> getAllCompanies() {
         return companyRepository.find().toList();
     }
