@@ -91,6 +91,37 @@ public class StationController {
         iview.setPreserveRatio(true);
         reportButton.setGraphic(iview);
 
+        reportButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Report malfunction");
+                alert.setHeaderText("Reporting");
+                alert.setContentText("Alert Message");
+                alert.setContentText("Are you sure you want to report a malfunction at this station?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get().equals(ButtonType.OK)) {
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Report sent");
+                    alert.setHeaderText("Message");
+                    alert.setContentText("Alert Message");
+                    alert.setContentText("Report sent successfully!");
+                    result = alert.showAndWait();
+                    if (result.get().equals(ButtonType.OK)) {
+                        Stage stage = (Stage) reportButton.getScene().getWindow();
+                        Scene scene = null;
+                        try {
+                            scene = new Scene(loadFXML("UserMainScene"), 1000, 700);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        stage.setTitle("Electric Charging Stations Application - Stations");
+                        stage.setScene(scene);
+                    }
+                }
+            }
+        });
+
         root.getChildren().add(reportButton);
     }
 
