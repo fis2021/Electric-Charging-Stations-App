@@ -21,7 +21,7 @@ public class StationsService {
         return stationsRepository;
     }
 
-    private static void checkStationDoesNotAlreadyExist(String stationName) throws StationAlreadyExistsException {
+    public static void checkStationDoesNotAlreadyExist(String stationName) throws StationAlreadyExistsException {
         for (Stations stations : stationsRepository.find()) {
             if (Objects.equals(stationName, stations.getStationName()))
                 throw new StationAlreadyExistsException(stationName);
