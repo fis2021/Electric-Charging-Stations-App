@@ -23,11 +23,11 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="stationNameTextField" layoutX="270.0" layoutY="135.0" prefHeight="26.0" prefWidth="290.0" />
-      <TextField fx:id="cityTextField" layoutX="270.0" layoutY="185.0" prefHeight="26.0" prefWidth="290.0" />
-      <TextField fx:id="addressTextField" layoutX="270.0" layoutY="235.0" prefHeight="26.0" prefWidth="290.0" />
-      <Button fx:id="addStationButton" layoutX="80.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleAddStation" style="-fx-background-color: #FF6347;" text="Add Station" textFill="WHITE" />
-      <Button fx:id="goBackToHomePageButton" layoutX="400.0" layoutY="350.0" mnemonicParsing="false" onAction="#goBackToTheHomePage" style="-fx-background-color: #FF6347;" text="Go back to the Home Page" textFill="WHITE" />
+      <TextField fx:id="stationNameTextField" id="stationName" layoutX="270.0" layoutY="135.0" prefHeight="26.0" prefWidth="290.0" />
+      <TextField fx:id="cityTextField" id="cityName" layoutX="270.0" layoutY="185.0" prefHeight="26.0" prefWidth="290.0" />
+      <TextField fx:id="addressTextField" id="address" layoutX="270.0" layoutY="235.0" prefHeight="26.0" prefWidth="290.0" />
+      <Button fx:id="addStationButton" id="addStation" layoutX="80.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleAddStation" style="-fx-background-color: #FF6347;" text="Add Station" textFill="WHITE" />
+      <Button fx:id="goBackToHomePageButton" id="returnToHome" layoutX="400.0" layoutY="350.0" mnemonicParsing="false" onAction="#goBackToTheHomePage" style="-fx-background-color: #FF6347;" text="Go back to the Home Page" textFill="WHITE" />
       <AnchorPane prefHeight="80.0" prefWidth="650.0" style="-fx-background-color: #FF8C00;">
          <children>
             <Label layoutX="245.0" layoutY="25.0" text="Add a new station">

@@ -90,11 +90,16 @@ public class VehicleOwnerRegistration {
     }
     public void registerOwner() {
         initVehicleOwner();
-        try {
-            VehicleOwnerService.addVehicleOwner(firstNameTextField.getText(), lastNameTextField.getText(), emailTextField.getText(), usernameTextField.getText(), setPasswordField.getText(), carBrandAndModelTextField.getText(), evTypeTextField.getText(), fabricationYearTextField.getText());
-            registrationMessage.setText("Account created successfully!");
-        } catch (UsernameAlreadyExistsException e) {
-            registrationMessage.setText(e.getMessage());
+        if(firstNameTextField.getText().isEmpty() || lastNameTextField.getText().isEmpty() || emailTextField.getText().isEmpty() || usernameTextField.getText().isEmpty() || setPasswordField.getText().isEmpty() || carBrandAndModelTextField.getText().isEmpty() || fabricationYearTextField.getText().isEmpty() || evTypeTextField.getText().isEmpty()) {
+            registrationMessage.setText("Please fill in all the fields!");
+        }
+        else {
+            try {
+                VehicleOwnerService.addVehicleOwner(firstNameTextField.getText(), lastNameTextField.getText(), emailTextField.getText(), usernameTextField.getText(), setPasswordField.getText(), carBrandAndModelTextField.getText(), evTypeTextField.getText(), fabricationYearTextField.getText());
+                registrationMessage.setText("Account created successfully!");
+            } catch (UsernameAlreadyExistsException e) {
+                registrationMessage.setText(e.getMessage());
+            }
         }
     }
 }

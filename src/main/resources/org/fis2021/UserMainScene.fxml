@@ -41,7 +41,7 @@
                         <Font size="13.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="logOutButton" alignment="CENTER" layoutX="848.0" layoutY="8.0" mnemonicParsing="false" onAction="#logOutButtonOnAction" prefHeight="40.0" prefWidth="75.0" style="-fx-background-color: #ffcc00; -fx-border-color: #ff9900;" text="Log out" textAlignment="CENTER">
+                  <Button fx:id="logOutButton" id="logoutButtonUser" alignment="CENTER" layoutX="848.0" layoutY="8.0" mnemonicParsing="false" onAction="#logOutButtonOnAction" prefHeight="40.0" prefWidth="75.0" style="-fx-background-color: #ffcc00; -fx-border-color: #ff9900;" text="Log out" textAlignment="CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>

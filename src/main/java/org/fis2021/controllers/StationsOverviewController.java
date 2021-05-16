@@ -43,7 +43,7 @@ public class StationsOverviewController {
             CompanyHomeController controller = loader.getController();
             controller.setCompany(company);
             Scene scene = new Scene(homeRoot, 800, 700);
-            stage.setTitle("Electric Charging Stations Application - Add New Station ");
+            stage.setTitle("Electric Charging Stations Application - Stations Overview");
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();

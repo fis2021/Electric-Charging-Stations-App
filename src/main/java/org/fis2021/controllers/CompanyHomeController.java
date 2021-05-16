@@ -33,6 +33,9 @@ public class CompanyHomeController {
     private Button logoutButton;
 
     @FXML
+    private Button popularityChartButton;
+
+    @FXML
     private ListView<AnchorPane> listView;
 
     private Company company;
@@ -56,9 +59,20 @@ public class CompanyHomeController {
 
     public void handleButtonActionOverview() {
         try {
-            Stage stage = (Stage) overviewButton.getScene().getWindow();
+            Stage stage = (Stage) popularityChartButton.getScene().getWindow();
             Scene scene = new Scene(loadFXML("StationsOverview"),800,700);
             stage.setTitle("Electric Charging Stations Application - Stations Overview");
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void handlePopularityChartButtonOnAction() {
+        try {
+            Stage stage = (Stage) overviewButton.getScene().getWindow();
+            Scene scene = new Scene(loadFXML("PopularityChart"),800,700);
+            stage.setTitle("Electric Charging Stations Application - Popularity Chart");
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();

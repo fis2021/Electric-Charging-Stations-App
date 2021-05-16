@@ -12,6 +12,7 @@ import org.fis2021.model.Company;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Objects;
 
 import static org.fis2021.services.FileSystemService.getPathToFile;
@@ -29,7 +30,7 @@ public class CompanyService {
         companyRepository.insert(new Company(companyName, countryOfOrigin, address, username, encodePassword(username,password), email, telephoneNumber, faxNumber));
     }
 
-    private static void checkCompanyDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
+    public static void checkCompanyDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
         for (Company company : companyRepository.find()) {
             if (Objects.equals(username, company.getUsername()))
                 throw new UsernameAlreadyExistsException(username);
@@ -50,6 +51,10 @@ public class CompanyService {
             return company;
         }
         return null;
+    }
+
+    public static List<Company> getAllCompanies() {
+        return companyRepository.find().toList();
     }
 
     public static String encodePassword(String salt, String password) {
