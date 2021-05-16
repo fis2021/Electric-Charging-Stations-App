@@ -150,8 +150,7 @@ public class StationController {
 
         if (hourBox.getValue() == null || minuteBox.getValue() == null || secondBox.getValue() == null) {
             selectBoxMessageLabel.setText("Please fill in the fields!");
-        }
-        if (hourBox.getValue() == 0 && minuteBox.getValue() == 0 && secondBox.getValue() == 0) {
+        } else if (hourBox.getValue() == 0 && minuteBox.getValue() == 0 && secondBox.getValue() == 0) {
             selectBoxMessageLabel.setText("The time cannot be 0!");
         } else {
             Stations station = StationsService.getExactStationFromCity(ApplicationHelper.stationName, ApplicationHelper.stationCity);
