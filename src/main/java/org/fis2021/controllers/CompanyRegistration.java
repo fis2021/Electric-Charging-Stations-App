@@ -91,13 +91,17 @@ public class CompanyRegistration {
         }
     }
 
-    public void registerComp() {
+    public void registerComp() throws IOException {
         initCompany();
-        try {
-            CompanyService.addCompany(companyNameTextField.getText(), countryOfOriginTextField.getText(), addressTextField.getText(), usernameTextField.getText(), setPasswordField.getText(), emailTextField.getText(), telephoneNumberTextField.getText(), faxNumberTextField.getText());
-            registrationMessage.setText("Account created successfully!");
-        } catch (UsernameAlreadyExistsException e) {
-            registrationMessage.setText(e.getMessage());
+        if (companyNameTextField.getText().isEmpty() || countryOfOriginTextField.getText().isEmpty() || addressTextField.getText().isEmpty() || usernameTextField.getText().isEmpty() || setPasswordField.getText().isEmpty() || emailTextField.getText().isEmpty() || telephoneNumberTextField.getText().isEmpty() || faxNumberTextField.getText().isEmpty()) {
+            registrationMessage.setText("Please fil in all the fields!");
+        } else {
+            try {
+                CompanyService.addCompany(companyNameTextField.getText(), countryOfOriginTextField.getText(), addressTextField.getText(), usernameTextField.getText(), setPasswordField.getText(), emailTextField.getText(), telephoneNumberTextField.getText(), faxNumberTextField.getText());
+                registrationMessage.setText("Account created successfully!");
+            } catch (UsernameAlreadyExistsException e) {
+                registrationMessage.setText(e.getMessage());
+            }
         }
     }
 }
