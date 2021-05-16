@@ -2,8 +2,10 @@ package org.fis2021.controllers;
 
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
@@ -17,7 +19,9 @@ import org.controlsfx.control.textfield.TextFields;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.fis2021.ApplicationHelper;
 
+import org.fis2021.model.Company;
 import org.fis2021.model.Stations;
+import org.fis2021.model.VehicleOwner;
 import org.fis2021.services.StationsService;
 import org.fis2021.services.TimerService;
 
@@ -53,6 +57,12 @@ public class UserHomeController implements Initializable {
 
     @FXML
     private Label busyLabel;
+
+    private VehicleOwner vehicleOwner;
+
+    public void setVehicleOwner(VehicleOwner v) {
+        vehicleOwner = v;
+    }
 
 
     private final Hashtable<String,Label> countdownLabels = new Hashtable<>();
@@ -264,8 +274,19 @@ public class UserHomeController implements Initializable {
     }
 
 
-    public void popularButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage) popularButton.getScene().getWindow();
+    public void popularButtonOnAction(ActionEvent event) throws IOException {
+        try {
+            Stage stage = (Stage) popularButton.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/fis2021/PopularityChart.fxml"));
+            Parent homeRoot = loader.load();
+            PopularityController controller = loader.getController();
+            controller.setVehicleOwner(vehicleOwner);
+            Scene scene = new Scene(homeRoot, 400, 500);
+            stage.setTitle("Electric Charging Stations Application - Company Home Page");
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void logOutButtonOnAction() throws IOException {

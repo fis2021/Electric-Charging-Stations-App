@@ -8,10 +8,12 @@ import org.dizitart.no2.objects.filters.ObjectFilters;
 import org.fis2021.exceptions.UserNotFoundException;
 import org.fis2021.exceptions.UsernameAlreadyExistsException;
 import org.fis2021.model.Company;
+import org.fis2021.model.Stations;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -80,5 +82,14 @@ public class CompanyService {
             throw new IllegalStateException("SHA-512 does not exist!");
         }
         return md;
+    }
+
+    public static ArrayList<String> getAllCompaniesName() {
+        ArrayList<String> companyList = new ArrayList<>();
+        Cursor<Company> cursor = companyRepository.find();
+        for(Company company : cursor) {
+            companyList.add(company.getCompanyName());
+        }
+        return companyList;
     }
 }
