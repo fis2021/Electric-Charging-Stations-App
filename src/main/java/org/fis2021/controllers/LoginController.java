@@ -1,6 +1,8 @@
 package org.fis2021.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -12,6 +14,7 @@ import javafx.scene.control.ChoiceBox;
 import org.fis2021.ApplicationHelper;
 import org.fis2021.exceptions.UserNotFoundException;
 import org.fis2021.model.Company;
+import org.fis2021.model.VehicleOwner;
 import org.fis2021.services.VehicleOwnerService;
 
 import org.fis2021.services.CompanyService;
@@ -82,10 +85,18 @@ public class LoginController {
                         String stored_password = VehicleOwnerService.getHashedUserPassword(usernameTextField.getText());
                         if (stored_password.equals(encoded_password)) {
                             loginMessage.setText(String.format("Successfully logged in as %s!", usernameTextField.getText()));
+                           // Stage stage = (Stage) loginButton.getScene().getWindow();
+                            VehicleOwner vehicleOwner = VehicleOwnerService.getVehicleOwner(usernameTextField.getText());
                             Stage stage = (Stage) loginButton.getScene().getWindow();
-                            Scene scene = new Scene(loadFXML("UserMainScene"), 1000, 700);
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/fis2021/UserMainScene.fxml"));
+                            Parent homeRoot = loader.load();
+                            UserHomeController controller = loader.getController();
+                            controller.setVehicleOwner(vehicleOwner);
+                            Scene scene = new Scene(homeRoot, 1000, 700);
                             stage.setTitle("Electric Charging Stations Application - User Home Page");
                             stage.setScene(scene);
+                           // Scene scene = new Scene(loadFXML("UserMainScene"), 1000, 700);
+
                         } else {
                             loginMessage.setText("Invalid credentials!");
                         }
@@ -117,9 +128,16 @@ public class LoginController {
                             ApplicationHelper.companyName = company.getCompanyName();
                             loginMessage.setText(String.format("Succesfully logged in as %s!", usernameTextField.getText()));
                             Stage stage = (Stage) loginButton.getScene().getWindow();
-                            Scene scene = new Scene(loadFXML("CompanyMainScene"), 800, 700);
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/fis2021/CompanyMainScene.fxml"));
+                            Parent homeRoot = loader.load();
+                            CompanyHomeController controller = loader.getController();
+                            controller.setCompany(company);
+                            Scene scene = new Scene(homeRoot, 800, 700);
                             stage.setTitle("Electric Charging Stations Application - Company Home Page");
                             stage.setScene(scene);
+                          //  Scene scene = new Scene(loadFXML("CompanyMainScene"), 800, 700);
+                           // stage.setTitle("Electric Charging Stations Application - Company Home Page");
+                            // stage.setScene(scene);
                         } else {
                             loginMessage.setText("Invalid Credentials!");
                         }

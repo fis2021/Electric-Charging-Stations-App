@@ -3,15 +3,19 @@ package org.fis2021.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import org.fis2021.ApplicationHelper;
 import org.fis2021.exceptions.StationAlreadyExistsException;
 import org.fis2021.exceptions.UsernameAlreadyExistsException;
 import org.fis2021.model.Company;
 import org.fis2021.model.Stations;
+import org.fis2021.services.CompanyService;
 import org.fis2021.services.StationsService;
 
 import java.io.IOException;
@@ -70,9 +74,14 @@ public class CompanyHomeController {
 
     public void handlePopularityChartButtonOnAction() {
         try {
-            Stage stage = (Stage) overviewButton.getScene().getWindow();
-            Scene scene = new Scene(loadFXML("PopularityChart"),800,700);
-            stage.setTitle("Electric Charging Stations Application - Popularity Chart");
+            ApplicationHelper.companyName = company.getCompanyName();
+            Stage stage = (Stage) popularityChartButton.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/fis2021/PopularityChart.fxml"));
+            Parent homeRoot = loader.load();
+            PopularityController controller = loader.getController();
+            controller.setCompany(company);
+            Scene scene = new Scene(homeRoot, 400, 500);
+            stage.setTitle("Electric Charging Stations Application - Company Home Page");
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
