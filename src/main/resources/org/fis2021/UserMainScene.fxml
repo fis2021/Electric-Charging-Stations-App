@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.controllers.UserHomeController">
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.controllers.UserHomeController">
     <children>
         <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-border-color: #000000;">
             <top>
@@ -19,7 +16,7 @@
                                 <Font size="20.0" />
                             </font>
                         </Label>
-                        <Button fx:id="popularButton" alignment="CENTER" layoutX="678.0" layoutY="8.0" mnemonicParsing="false" onAction="#popularButtonOnAction" prefHeight="40.0" prefWidth="158.0" style="-fx-background-color: #ffcc00; -fx-border-color: #ff9900;" text="Most popular stations" textAlignment="CENTER">
+                        <Button id="popularButton" fx:id="popularButton" alignment="CENTER" layoutX="678.0" layoutY="8.0" mnemonicParsing="false" onAction="#popularButtonOnAction" prefHeight="40.0" prefWidth="158.0" style="-fx-background-color: #ffcc00; -fx-border-color: #ff9900;" text="Most popular stations" textAlignment="CENTER">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -28,7 +25,7 @@
                             </effect>
 
                         </Button>
-                        <Button fx:id="exitButton" alignment="CENTER" layoutX="936.0" layoutY="8.0" minWidth="47.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="40.0" prefWidth="47.0" style="-fx-background-color: #ffcc00; -fx-border-color: #ff9900;" text="Exit" textAlignment="CENTER">
+                        <Button id="exitButton" fx:id="exitButton" alignment="CENTER" layoutX="936.0" layoutY="8.0" minWidth="47.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="40.0" prefWidth="47.0" style="-fx-background-color: #ffcc00; -fx-border-color: #ff9900;" text="Exit" textAlignment="CENTER">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -36,12 +33,12 @@
                                 <DropShadow blurType="GAUSSIAN" spread="0.1" />
                             </effect>
                         </Button>
-                  <TextField fx:id="selectRegion" layoutX="150.0" layoutY="15.0" onAction="#selectRegionOnAction" prefHeight="25.0" prefWidth="200.0" promptText="Town/County">
+                  <TextField id="selectField" fx:id="selectRegion" layoutX="150.0" layoutY="15.0" onAction="#selectRegionOnAction" prefHeight="25.0" prefWidth="200.0" promptText="Town/County">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="logOutButton" id="logoutButtonUser" alignment="CENTER" layoutX="848.0" layoutY="8.0" mnemonicParsing="false" onAction="#logOutButtonOnAction" prefHeight="40.0" prefWidth="75.0" style="-fx-background-color: #ffcc00; -fx-border-color: #ff9900;" text="Log out" textAlignment="CENTER">
+                  <Button id="logoutButton" fx:id="logOutButton" alignment="CENTER" layoutX="848.0" layoutY="8.0" mnemonicParsing="false" onAction="#logOutButtonOnAction" prefHeight="40.0" prefWidth="75.0" style="-fx-background-color: #ffcc00; -fx-border-color: #ff9900;" text="Log out" textAlignment="CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
