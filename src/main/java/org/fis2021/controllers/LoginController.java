@@ -135,9 +135,6 @@ public class LoginController {
                             Scene scene = new Scene(homeRoot, 800, 700);
                             stage.setTitle("Electric Charging Stations Application - Company Home Page");
                             stage.setScene(scene);
-                          //  Scene scene = new Scene(loadFXML("CompanyMainScene"), 800, 700);
-                           // stage.setTitle("Electric Charging Stations Application - Company Home Page");
-                            // stage.setScene(scene);
                         } else {
                             loginMessage.setText("Invalid Credentials!");
                         }
