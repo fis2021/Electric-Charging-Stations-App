@@ -10,9 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
+import org.testfx.matcher.base.NodeMatchers;
 
 import java.io.IOException;
 
@@ -81,6 +83,7 @@ class CompanyRegistrationTest {
     void testSwitchToVehicleOwnerRegister(FxRobot robot) {
         robot.clickOn("#register");
         robot.clickOn("#switchToCompany");
+        FxAssert.verifyThat("#registerCompany", NodeMatchers.isVisible());
     }
 
     @Test
@@ -88,6 +91,7 @@ class CompanyRegistrationTest {
         robot.clickOn("#register");
         robot.clickOn("#switchToCompany");
         robot.clickOn("#switchToLogin");
+        FxAssert.verifyThat("#register", NodeMatchers.isVisible());
     }
 
 }

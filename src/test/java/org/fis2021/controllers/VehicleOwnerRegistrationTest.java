@@ -6,13 +6,16 @@ import org.apache.commons.io.FileUtils;
 import org.fis2021.services.CompanyService;
 import org.fis2021.services.DatabaseService;
 import org.fis2021.services.FileSystemService;
+import org.fis2021.services.VehicleOwnerService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
+import org.testfx.matcher.base.NodeMatchers;
 
 import java.io.IOException;
 
@@ -29,7 +32,7 @@ class VehicleOwnerRegistrationTest {
         FileSystemService.initDirectory();
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
         DatabaseService.initDatabase();
-        CompanyService.initCompany();
+        VehicleOwnerService.initVehicleOwner();
     }
 
     @Start
@@ -78,13 +81,16 @@ class VehicleOwnerRegistrationTest {
 
     @Test
     void testSwitchToCompanyRegister(FxRobot robot) {
+
         robot.clickOn("#register");
         robot.clickOn("#switchToCompany");
+        FxAssert.verifyThat("#registerCompany", NodeMatchers.isVisible());
     }
 
     @Test
     void testBackToLogin(FxRobot robot) {
         robot.clickOn("#register");
         robot.clickOn("#returnToLoginVehicleOwner");
+        FxAssert.verifyThat("#register", NodeMatchers.isVisible());
     }
 }
