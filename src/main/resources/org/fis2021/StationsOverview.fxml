@@ -29,7 +29,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="backHomeControllerButton" layoutX="57.0" layoutY="176.0" mnemonicParsing="false" onAction="#backToTheHomeController" style="-fx-background-color: #FFCC00;" text="Back To The Home Controller">
+            <Button fx:id="backHomeControllerButton" id="backHomeController" layoutX="57.0" layoutY="176.0" mnemonicParsing="false" onAction="#backToTheHomeController" style="-fx-background-color: #FFCC00;" text="Back To The Home Controller">
                <font>
                   <Font size="20.0" />
                </font>

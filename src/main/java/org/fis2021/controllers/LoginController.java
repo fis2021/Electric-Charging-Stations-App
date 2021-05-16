@@ -59,80 +59,77 @@ public class LoginController {
         initVehicleOwner();
         initCompany();
         initStations();
-        if(roleBox.getValue() == null) {
+        if (roleBox.getValue() == null) {
             loginMessage.setText("Please choose a role!");
         }
-        if(((String) roleBox.getValue()).equals("Vehicle Owner")) {
-            initVehicleOwner();
+        else{
+                if (((String) roleBox.getValue()).equals("Vehicle Owner")) {
+                    initVehicleOwner();
 
-            if (usernameTextField.getText().isEmpty() && setPasswordField.getText().isEmpty()) {
-                loginMessage.setText("Please enter an username and a password!");
-            } else {
-                if (usernameTextField.getText().isEmpty() || usernameTextField == null) {
-                    loginMessage.setText("Please enter an username!");
-                }
-                else
-                if (setPasswordField.getText().isEmpty() || setPasswordField == null) {
-                    loginMessage.setText("Please enter a password!");
-                }
-            }
+                    if (usernameTextField.getText().isEmpty() && setPasswordField.getText().isEmpty()) {
+                        loginMessage.setText("Please enter an username and a password!");
+                    } else {
+                        if (usernameTextField.getText().isEmpty() || usernameTextField == null) {
+                            loginMessage.setText("Please enter an username!");
+                        } else if (setPasswordField.getText().isEmpty() || setPasswordField == null) {
+                            loginMessage.setText("Please enter a password!");
+                        }
+                    }
 
-            String encoded_password = VehicleOwnerService.encodePassword(usernameTextField.getText(), setPasswordField.getText());
+                    String encoded_password = VehicleOwnerService.encodePassword(usernameTextField.getText(), setPasswordField.getText());
 
-            try {
-                String stored_password = VehicleOwnerService.getHashedUserPassword(usernameTextField.getText());
-                if(stored_password.equals(encoded_password)) {
-                    loginMessage.setText(String.format("Successfully logged in as %s!", usernameTextField.getText()));
-                    Stage stage = (Stage) loginButton.getScene().getWindow();
-                    Scene scene = new Scene(loadFXML("UserMainScene"), 1000, 700);
-                    stage.setTitle("Electric Charging Stations Application - User Home Page");
-                    stage.setScene(scene);
+                    try {
+                        String stored_password = VehicleOwnerService.getHashedUserPassword(usernameTextField.getText());
+                        if (stored_password.equals(encoded_password)) {
+                            loginMessage.setText(String.format("Successfully logged in as %s!", usernameTextField.getText()));
+                            Stage stage = (Stage) loginButton.getScene().getWindow();
+                            Scene scene = new Scene(loadFXML("UserMainScene"), 1000, 700);
+                            stage.setTitle("Electric Charging Stations Application - User Home Page");
+                            stage.setScene(scene);
+                        } else {
+                            loginMessage.setText("Invalid credentials!");
+                        }
+                    } catch (UserNotFoundException | IOException e) {
+                        loginMessage.setText(e.getMessage());
+                    }
+
                 }
-                else {
-                    loginMessage.setText("Invalid credentials!");
+
+                if (((String) roleBox.getValue()).equals("Company Administrator")) {
+                    initCompany();
+
+                    if (usernameTextField.getText().isEmpty() && setPasswordField.getText().isEmpty()) {
+                        loginMessage.setText("Please enter an username and a password!");
+                    } else {
+                        if (usernameTextField.getText().isEmpty() || usernameTextField == null) {
+                            loginMessage.setText("Please enter an username!");
+                        } else if (setPasswordField.getText().isEmpty() || setPasswordField == null) {
+                            loginMessage.setText("Please enter a password!");
+                        }
+                    }
+
+                    String encoded_password = CompanyService.encodePassword(usernameTextField.getText(), setPasswordField.getText());
+
+                    try {
+                        String stored_password = CompanyService.getHashedUserPassword(usernameTextField.getText());
+                        if (stored_password.equals(encoded_password)) {
+                            Company company = CompanyService.getCompany(usernameTextField.getText());
+                            ApplicationHelper.companyName = company.getCompanyName();
+                            loginMessage.setText(String.format("Succesfully logged in as %s!", usernameTextField.getText()));
+                            Stage stage = (Stage) loginButton.getScene().getWindow();
+                            Scene scene = new Scene(loadFXML("CompanyMainScene"), 800, 700);
+                            stage.setTitle("Electric Charging Stations Application - Company Home Page");
+                            stage.setScene(scene);
+                        } else {
+                            loginMessage.setText("Invalid Credentials!");
+                        }
+                    } catch (UserNotFoundException | IOException e) {
+                        loginMessage.setText(e.getMessage());
+                    }
                 }
-            } catch (UserNotFoundException | IOException e) {
-                loginMessage.setText(e.getMessage());
             }
 
         }
-
-        if(((String) roleBox.getValue()).equals("Company Administrator")) {
-            initCompany();
-
-            if (usernameTextField.getText().isEmpty() && setPasswordField.getText().isEmpty()) {
-                loginMessage.setText("Please enter an username and a password!");
-            } else {
-                if (usernameTextField.getText().isEmpty() || usernameTextField == null) {
-                    loginMessage.setText("Please enter an username!");
-                }
-                else
-                if (setPasswordField.getText().isEmpty() || setPasswordField == null) {
-                    loginMessage.setText("Please enter a password!");
-                }
-            }
-
-            String encoded_password = CompanyService.encodePassword(usernameTextField.getText(), setPasswordField.getText());
-
-            try {
-                String stored_password = CompanyService.getHashedUserPassword(usernameTextField.getText());
-                if (stored_password.equals(encoded_password)) {
-                    Company company = CompanyService.getCompany(usernameTextField.getText());
-                    ApplicationHelper.companyName = company.getCompanyName();
-                    loginMessage.setText(String.format("Succesfully logged in as %s!", usernameTextField.getText()));
-                    Stage stage = (Stage) loginButton.getScene().getWindow();
-                    Scene scene = new Scene(loadFXML("CompanyMainScene"), 800, 700);
-                    stage.setTitle("Electric Charging Stations Application - Company Home Page");
-                    stage.setScene(scene);
-                } else {
-                    loginMessage.setText("Invalid Credentials!");
-                  }
-                } catch (UserNotFoundException | IOException e) {
-                    loginMessage.setText(e.getMessage());
-                }
-        }
-
-    }
 
     public void registerButtonOnAction(ActionEvent event) {
         try {
