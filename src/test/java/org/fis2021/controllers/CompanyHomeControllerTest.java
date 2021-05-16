@@ -1,13 +1,10 @@
 package org.fis2021.controllers;
 
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
 import org.fis2021.exceptions.UserNotFoundException;
 import org.fis2021.exceptions.UsernameAlreadyExistsException;
-import org.fis2021.model.Company;
-import org.fis2021.model.VehicleOwner;
 import org.fis2021.services.CompanyService;
 import org.fis2021.services.DatabaseService;
 import org.fis2021.services.FileSystemService;
@@ -25,11 +22,9 @@ import org.testfx.matcher.base.NodeMatchers;
 import java.io.IOException;
 
 import static org.fis2021.App.loadFXML;
-import static org.testfx.assertions.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(ApplicationExtension.class)
-class LoginControllerTest {
+class CompanyHomeControllerTest {
     @BeforeEach
     void setUp() throws IOException, UsernameAlreadyExistsException {
         FileSystemService.APPLICATION_FOLDER = ".test-registration";
@@ -37,7 +32,6 @@ class LoginControllerTest {
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
         DatabaseService.initDatabase();
         CompanyService.initCompany();
-        VehicleOwnerService.initVehicleOwner();
     }
 
     @Start
@@ -55,43 +49,8 @@ class LoginControllerTest {
     }
 
     @Test
-    void testVehicleOwnerNotRegistered(FxRobot robot) {
-        robot.clickOn("#username");
-        robot.write("andras");
-        robot.clickOn("#password");
-        robot.write("12345");
-        robot.clickOn("#role");
-        robot.clickOn("Vehicle Owner");
-        robot.clickOn("#login");
-        assertThat(robot.lookup("#errorMessage").queryLabeled().getText()).isEqualTo("The username andras is not registered");
-    }
-
-    @Test
-    void testCompanyNotRegistered(FxRobot robot) {
-        robot.clickOn("#username");
-        robot.write("Compa1");
-        robot.clickOn("#password");
-        robot.write("12345");
-        robot.clickOn("#role");
-        robot.clickOn("Company Administrator");
-        robot.clickOn("#login");
-        assertThat(robot.lookup("#errorMessage").queryLabeled().getText()).isEqualTo("The username Compa1 is not registered");
-    }
-
-    @Test
-    void testNoUsername(FxRobot robot) {
-        robot.clickOn("#role");
-        robot.clickOn("Vehicle Owner");
-        robot.clickOn("#password");
-        robot.write("12345");
-        robot.clickOn("#login");
-        assertThat(robot.lookup("#errorMessage").queryLabeled().getText()).isEqualTo("The username  is not registered");
-    }
-
-    @Test
-    void testLoginCompany(FxRobot robot) throws UsernameAlreadyExistsException, UserNotFoundException {
+    void travelToOverviewStations(FxRobot robot) throws UsernameAlreadyExistsException {
         CompanyService.addCompany("Compania1", "Romania", "Lalelelor", "Compa1", "12345", "compania1@gmail.com", "0256458697", "+40 265" );
-
         robot.clickOn("#username");
         robot.write("Compa1");
         robot.clickOn("#password");
@@ -99,32 +58,62 @@ class LoginControllerTest {
         robot.clickOn("#role");
         robot.clickOn("Company Administrator");
         robot.clickOn("#login");
+        robot.clickOn("#overviewButton");
+        robot.clickOn("#backHomeController");
         FxAssert.verifyThat("#logoutButton", NodeMatchers.isVisible());
-
     }
 
     @Test
-    void testLoginVehicleOwner(FxRobot robot) throws UsernameAlreadyExistsException, UserNotFoundException {
-        VehicleOwnerService.addVehicleOwner("Andrei", "Marcel", "andrei.marcel@gmail.com", "andrmarc", "12345", "Tesla", "full electric", "2020" );
-
+    void travelToAddNewStation(FxRobot robot) throws UsernameAlreadyExistsException {
+        CompanyService.addCompany("Compania1", "Romania", "Lalelelor", "Compa1", "12345", "compania1@gmail.com", "0256458697", "+40 265" );
         robot.clickOn("#username");
-        robot.write("andrmarc");
+        robot.write("Compa1");
         robot.clickOn("#password");
         robot.write("12345");
         robot.clickOn("#role");
-        robot.clickOn("Vehicle Owner");
+        robot.clickOn("Company Administrator");
         robot.clickOn("#login");
-        FxAssert.verifyThat("#logoutButtonUser", NodeMatchers.isVisible());
+        robot.clickOn("#addNewStation");
+        robot.clickOn("#stationName");
+        robot.write("Statie 789");
+        robot.clickOn("#cityName");
+        robot.write("Timisoara");
+        robot.clickOn("#address");
+        robot.write("Str Sinaia");
+        robot.clickOn("#addStation");
+        robot.clickOn("#returnToHome");
+        robot.clickOn("delete");
+        robot.clickOn("OK");
+        FxAssert.verifyThat("#logoutButton", NodeMatchers.isVisible());
     }
 
     @Test
-    void testNavigateToRegister(FxRobot robot) {
-        robot.clickOn("#register");
-        FxAssert.verifyThat("#returnToLoginVehicleOwner", NodeMatchers.isVisible());
+    void testLogoutButton(FxRobot robot) throws UsernameAlreadyExistsException{
+        CompanyService.addCompany("Compania1", "Romania", "Lalelelor", "Compa1", "12345", "compania1@gmail.com", "0256458697", "+40 265" );
+        robot.clickOn("#username");
+        robot.write("Compa1");
+        robot.clickOn("#password");
+        robot.write("12345");
+        robot.clickOn("#role");
+        robot.clickOn("Company Administrator");
+        robot.clickOn("#login");
+        robot.clickOn("#logoutButton");
+        robot.clickOn("OK");
+        FxAssert.verifyThat("#exit", NodeMatchers.isVisible());
     }
 
     @Test
-    void testExitButton(FxRobot robot) {
-        robot.clickOn("#exit");
+    void testPopularityNavigation(FxRobot robot) throws UsernameAlreadyExistsException{
+        CompanyService.addCompany("Compania1", "Romania", "Lalelelor", "Compa1", "12345", "compania1@gmail.com", "0256458697", "+40 265" );
+        robot.clickOn("#username");
+        robot.write("Compa1");
+        robot.clickOn("#password");
+        robot.write("12345");
+        robot.clickOn("#role");
+        robot.clickOn("Company Administrator");
+        robot.clickOn("#login");
+        robot.clickOn("#popularityButton");
+        robot.clickOn("#returnHomeScene");
+        FxAssert.verifyThat("#logoutButton", NodeMatchers.isVisible());
     }
 }
